@@ -233,20 +233,27 @@ class ga(): #Genetic Algorithm
         for j in range(self.v):
             self.fin.append(self.x[j][0])
             
-        return (self.vf,self.c[0],self.fin,self.pres(self))
+        return (self.c[0],self.fin,self.pres(self))
 
 class gui(QtGui.QMainWindow, Ui_MainWindow): #GUI
-    def final(self,vf,cost,values,mi,size,pres):
+    def final(self,cost,values,mi,size,pres):
+        self.vf=[]
         ms=QtGui.QMessageBox()
+        for j in range(len(values)):
+            appr="x"
+            for i in range(j):
+                appr=appr+"'"
+            self.vf.append(appr)
+            
         x="Cost = "+str("%8f"%round(cost,5))
         if(size>-1):
             x=x+" Precision = "+str("%8f"%round(pres,5))
         y=""
         for j in range(len(values)):
             if(len(values)<4):
-                y=y+" "+vf[j].replace("x''","z").replace("x'","y")+" = "+"%8f"%round(values[j],5)
+                y=y+" "+self.vf[j].replace("x''","z").replace("x'","y")+" = "+"%8f"%round(values[j],5)
             else:
-                y=y+" "+vf[j]+" = "+"%8f"%round(values[j],5)
+                y=y+" "+self.vf[j]+" = "+"%8f"%round(values[j],5)
         if(mi==True):
             abc="Minima"
         else:
@@ -297,9 +304,9 @@ ui.show()
 app.exec_()
 
 re,cf,le,gen,l,h,mi,sz=ui.ret()
-num,cost,values,pres=ga(re,cf,l,h,gen,le,mi,sz)
+cost,values,pres=ga(re,cf,l,h,gen,le,mi,sz)
 if(re==True):
-    ui.final(num,cost,values,mi,-1,pres)
+    ui.final(cost,values,mi,-1,pres)
 else:
-    ui.final(num,cost,values,mi,sz,pres)    
+    ui.final(cost,values,mi,sz,pres)    
 plt.show()
