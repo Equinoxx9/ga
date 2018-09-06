@@ -1,1 +1,1 @@
-# ga
+Genetic Algorithm for Mathematical Optimisation
